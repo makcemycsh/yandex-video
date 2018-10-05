@@ -1,0 +1,50 @@
+.b-footer {
+  flex:           0 0 auto;
+  background:     white;
+  margin-bottom:  0;
+  margin-top:     auto;
+  padding-top:    22px;
+  padding-bottom: 25px;
+  font-size:      12px;
+  line-height:    14px;
+  color:          $text-color-grey;
+  letter-spacing: 0.01px;
+  position:       relative;
+  z-index:        3;
+  border-top:     1px solid #F0F0F0;
+  &__inner {
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: space-between;
+  }
+  &__menu {
+    display:         flex;
+    flex-wrap:       wrap;
+    align-items:     center;
+    justify-content: center;
+    margin-bottom:   1rem;
+    width:           100%;
+    a {
+      margin: 0.15rem 0.5rem;
+    }
+  }
+  @include w-from($screen-md) {
+    &__inner {
+      flex-direction: row;
+    }
+    &__menu {
+      flex-direction:  row;
+      align-items:     flex-start;
+      justify-content: flex-start;
+      margin-bottom:   0;
+      width:           auto;
+      a {
+        margin: 0 1rem 0 0;
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

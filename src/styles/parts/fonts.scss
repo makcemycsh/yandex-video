@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'ArialMT';
+  src:         url("../assets/fonts/arialmt/arialMT.ttf") format("truetype");
+  font-weight: normal;
+  font-style:  normal;
+}
+
+@font-face {
+  font-family: 'ArialMT';
+  src:         url("../assets/fonts/arialmt/arialMT-bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style:  normal;
+}
+
+//Иконочные шрифты
+@font-face {
+  font-family: 'icon';
+  src:         url('../assets/fonts/icon/icon.eot');                                    /* IE9 Compat Modes */
+  src:         url('../assets/fonts/icon/icon.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+               url('../assets/fonts/icon/icon.woff2') format('woff2'),                  /* Новейшие браузеры */
+               url('../assets/fonts/icon/icon.woff') format('woff'),                    /* Новые браузеры и IE9+ */
+               url('../assets/fonts/icon/icon.ttf') format('truetype'),                 /* Старые Safari, Android, iOS */
+               url('../assets/fonts/icon/icon.svg#svgFontName') format('svg');          /* Древние Safari, iOS, Android */
+  font-weight: normal;
+  font-style:  normal;
+}

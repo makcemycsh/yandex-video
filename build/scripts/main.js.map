@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":["$","on","this","toggleClass"],"mappings":"aAAAA,EAAE,gBAAgBC,GAAG,QAAS,WAC5BD,EAAEE,MAAMC,YAAY","file":"main.js","sourcesContent":["$('.js-menu-bar').on('click', function () {\n  $(this).toggleClass('is-active');\n});"],"sourceRoot":"/source/"}

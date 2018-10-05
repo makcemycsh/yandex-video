@@ -1,0 +1,166 @@
+.b-card {
+  box-sizing:       border-box;
+  border-radius:    20px;
+  background-color: $card-color;
+  color:            $text-color-main;
+  transition:       .3s ease-out;
+  position:         relative;
+  display:          flex;
+  flex-direction:   column;
+  &__head {
+    padding: 16px;
+  }
+  header {
+    display:       flex;
+    margin-bottom: 13px;
+    align-items:   center;
+    margin-right:  30px;
+  }
+  &__main {
+    flex:            1 1;
+    display:         flex;
+    flex-direction:  column;
+    padding:         9px 16px 16px;
+    border-radius:   20px 20px 15px 15px;
+    justify-content: flex-end;
+  }
+  &__text {
+    @extend %p;
+    margin-right: 30px;
+  }
+  &__ico {
+    margin-right: 18px;
+  }
+  &__data {
+    margin-top:     16px;
+    display:        flex;
+    flex-direction: column;
+    flex:           1 1;
+    @include w-from($screen-md) {
+      margin-top: 31px;
+    }
+    picture {
+      display:        flex;
+      flex:           1 1;
+      flex-direction: column;
+    }
+    img {
+      flex:          1 1;
+      border-radius: 20px;
+      width:         100%;
+      object-fit:    cover;
+    }
+  }
+  &__title {
+    @extend %h2;
+    display:            -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow:           hidden;
+    text-overflow:      ellipsis;
+  }
+  &__info {
+    display:         flex;
+    justify-content: space-between;
+  }
+  &__close {
+    @extend %click-area;
+    position:    absolute;
+    font-weight: bold;
+    top:         20px;
+    right:       20px;
+    height:      15px;
+    background:  transparent;
+    border:      none;
+    outline:     none;
+    display:     none;
+    i {
+      margin:    0;
+      font-size: 16px;
+    }
+  }
+  &__link {
+    @extend %click-area;
+    position:    absolute;
+    font-weight: bold;
+    bottom:      20px;
+    right:       20px;
+    display:     none;
+    i {
+      margin:    0;
+      font-size: 16px;
+    }
+  }
+  &__btns {
+    display:   flex;
+    flex-wrap: wrap;
+    margin:    -9px;
+    button {
+      margin: 9px
+    }
+  }
+  &:hover {
+    box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.50);
+    background: #F3F3F3;
+    transition: .15s ease-out;
+    .b-card__link,
+    .b-card__close {
+      display: block;
+    }
+  }
+  &.mod-s {
+    grid-column: span 1;
+    grid-row:    span 1;
+    @include w-from($screen-md) {
+      grid-column: span 2;
+      grid-row:    span 1;
+    }
+    .b-card__text {
+      @extend %p2;
+      color: black;
+    }
+    .b-card__info {
+      flex-direction: column;
+      span {
+        @extend %span1;
+        margin-bottom: 20px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  &.mod-m {
+    grid-column: span 1;
+    grid-row:    span 1;
+    @include w-from($screen-md) {
+      grid-column: span 3;
+      grid-row:    span 1;
+      .b-card__text {
+        font-size:   20px;
+        line-height: 23px;
+        color:       black;
+      }
+    }
+  }
+  &.mod-l {
+    grid-column: span 1;
+    grid-row:    span 1;
+    @include w-from($screen-md) {
+      grid-column: span 4;
+      grid-row:    span 3;
+    }
+  }
+  &.mod-attention {
+    background: $attent-color;
+    .b-card__head {
+      color: white;
+    }
+    .b-card__main {
+      background: $card-color;
+    }
+    .b-card__close {
+      color: white;
+    }
+  }
+}

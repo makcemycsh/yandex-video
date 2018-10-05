@@ -1,0 +1,91 @@
+html,
+body {
+  height:    100%;
+  width:     100%;
+  @include fluidFontSize(11px, 16px, 768px, 960px, 16px);
+}
+
+body {
+  margin:                 0;
+  -webkit-font-smoothing: antialiased;
+  min-width:              320px;
+  font-family:            $font-family-sans;
+}
+
+figure {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  color:  inherit;
+}
+
+a {
+  text-decoration:          none;
+  color:                    inherit;
+  outline:                  none;
+  text-decoration-skip-ink: none;
+}
+
+ul,
+ol {
+  margin:     0;
+  padding:    0;
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing:  0;
+}
+
+a,
+button,
+label {
+  // Подсветка при тапе
+  -webkit-touch-callout:       none;
+  -webkit-user-select:         none;
+  -khtml-user-select:          none;
+  -moz-user-select:            none;
+  -ms-user-select:             none;
+  user-select:                 none;
+  -webkit-tap-highlight-color: transparent;
+  padding:                     0;
+}
+
+select::-ms-expand {display: none;}
+
+input::-ms-clear {display: none;}
+
+button,
+select,
+label {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+// Автозаполнение
+input,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  background:  none;
+  transition:  background-color 999s, color 999s;
+  font-family: inherit;
+}

@@ -1,0 +1,24 @@
+.b-content {
+  color:  $text-color-main;
+  margin: 0 auto 80px auto;
+  &__title {
+    font-size:     2.25rem;
+    line-height:   2.625rem;
+    margin-bottom: 32px;
+  }
+  &__inner {
+    flex:            1 0 auto;
+    display:         grid;
+    justify-content: center;
+    margin:          0 auto;
+    grid-gap:        16px 0;
+    //max-width:       600px;
+    grid-template-columns: calc(100vw - 32px);
+    @include w-from($screen-md) {
+      max-width:             1080px;
+      grid-template-columns: repeat(6, minmax(100px, 1fr));
+      grid-auto-flow:        dense row;
+      grid-gap:              14px 20px;
+    }
+  }
+}

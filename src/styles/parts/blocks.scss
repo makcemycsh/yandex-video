@@ -1,0 +1,38 @@
+.b-page {
+  display:        flex;
+  flex-direction: column;
+}
+
+.b-data-set {
+  display:   flex;
+  flex-wrap: wrap;
+  margin:    -8px;
+  @extend %span2;
+  &__item {
+    margin: 8px;
+    flex:   1 1 40%;
+  }
+  &__val {
+    font-weight: bold;
+  }
+}
+
+.b-btn {
+  border:        none;
+  outline:       none;
+  min-width:     132px;
+  padding:       16px 24px;
+  font-size:     20px;
+  line-height:   23px;
+  font-weight:   bold;
+  border-radius: 8px;
+  background:    $gray;
+  &:active,
+  &:focus {
+    border:  none;
+    outline: none;
+  }
+  &.mod-yellow {
+    background: $yellow;
+  }
+}

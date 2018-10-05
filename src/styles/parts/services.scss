@@ -1,0 +1,98 @@
+%wrapper {
+  min-width:  $screen-md;
+  box-sizing: border-box;
+  width:      100%;
+  margin:     0 auto;
+  padding:    0 20px;
+}
+
+%h1 {
+  font-size:   2.25rem;
+  line-height: 2.625rem;
+  font-weight: bold;
+}
+
+%h2 {
+  font-size:   1.2727rem;
+  line-height: 1.5455rem;
+  font-weight: bold;
+  @include w-from($screen-md) {
+    font-size:   1.5rem;
+    line-height: 1.75rem;
+  }
+}
+
+%p {
+  font-size:   1.6364rem;
+  line-height: 2rem;
+  @include w-from($screen-md) {
+    font-size:   1.5rem;
+    line-height: 1.75rem;
+  }
+}
+
+%p2 {
+  @include w-from($screen-md) {
+    font-size:   1.25rem;
+    line-height: 1.4375rem;
+  }
+}
+
+%span1 {
+  font-size:   1.0909rem;
+  line-height: 1.2727rem;
+  @include w-from($screen-md) {
+    font-size:   1.125rem;
+    line-height: 1.3125rem;
+  }
+}
+
+%span2 {
+  font-size:   1.2727rem;
+  line-height: 1.4545rem;
+  @include w-from($screen-md) {
+    font-size:   1.125rem;
+    line-height: 1.3125rem;
+  }
+}
+
+%click-area {
+  &:after {
+    content:  '';
+    position: absolute;
+    top:      -10px;
+    bottom:   -10px;
+    left:     -10px;
+    right:    -10px;
+  }
+}
+
+.wrapper-1280 {
+  @extend %wrapper;
+  max-width: 1280px;
+}
+
+.wrapper-1080 {
+  @extend %wrapper;
+  max-width: 1080px;
+}
+
+.mod-only-sm {
+  @include w-from($screen-md) {display: none !important;}
+  @include w-to($screen-md) {display: initial;}
+}
+
+.mod-only-lg {
+  @include w-to($screen-lg) {display: none !important;}
+  @include w-from($screen-lg) {display: initial;}
+}
+
+.mod-no-sm {
+  @include w-from($screen-md) {display: initial;}
+  @include w-to($screen-md) {display: none !important;}
+}
+
+.mod-no-lg {
+  @include w-to($screen-lg) {display: initial;}
+  @include w-from($screen-lg) {display: none !important;}
+}

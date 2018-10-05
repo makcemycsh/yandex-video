@@ -1,0 +1,112 @@
+.icon {
+  font-family:             icon;
+  display:                 inline-flex;
+  align-items:             center;
+  justify-content:         center;
+  font-style:              normal;
+  font-weight:             normal;
+  speak:                   none;
+  text-decoration:         inherit;
+  min-width:               1em;
+  text-align:              center;
+  font-variant:            normal;
+  text-transform:          none;
+  line-height:             1em;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size:               20px;
+  max-height:              50px;
+  max-width:               50px;
+
+  &.i-arrow-r {
+    &:after {
+      content: "\e800";
+    }
+  }
+  &.i-arrow-l {
+    transform: rotate(180deg);
+    &:after {
+      content: "\e800";
+    }
+  }
+  &.i-prev {
+    &:after {
+      content: "\e801";
+    }
+  }
+  &.i-next {
+    transform: rotate(180deg);
+    &:after {
+      content: "\e801";
+    }
+  }
+  &.i-cam {
+    &:after {
+      content: "\e802";
+    }
+  }
+  &.i-ac {
+    &:after {
+      content: "\e803";
+    }
+  }
+  &.i-close {
+    &:after {
+      content: "\e804";
+    }
+  }
+  &.i-robot {
+    &:after {
+      content: "\e805";
+    }
+  }
+  &.i-kettle {
+    &:after {
+      content: "\e806";
+    }
+  }
+  &.i-thermal {
+    &:after {
+      content: "\e807";
+    }
+  }
+  &.i-stats {
+    &:after {
+      content: "\e808";
+    }
+  }
+  &.i-router {
+    &:after {
+      content: "\e809";
+    }
+  }
+  &.i-music {
+    &:after {
+      content: "\e80a";
+    }
+  }
+  &.i-fridge {
+    &:after {
+      content: "\e80b";
+    }
+  }
+  &.i-key {
+    &:after {
+      content: "\e80c";
+    }
+  }
+  &.i-battery {
+    &:after {
+      content: "\e80d";
+    }
+  }
+  &.i-conditioner {
+    &:after {
+      content: "\e80e";
+    }
+  }
+  &.i-key {
+    font-size: 2.5em;
+  }
+}
+

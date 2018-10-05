@@ -1,0 +1,73 @@
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+  :-moz-placeholder {@content}
+  ::-moz-placeholder {@content}
+  :-ms-input-placeholder {@content}
+}
+
+@mixin font-size($size: inherit, $spacing: auto, $height: normal) {
+  font-size:      $size;
+  letter-spacing: $spacing;
+  line-height:    $height;
+}
+
+@mixin inc-click-area($px: 10px) {
+  position: relative;
+  &:after {
+    content:  '';
+    position: absolute;
+    top:      -$px; bottom: -$px;
+    left:     -$px; right: -$px;
+  }
+}
+
+@mixin w-from($screen) {
+  @media (min-width: $screen) {
+    @content;
+  }
+}
+
+@mixin w-to($screen) {
+  @media (max-width: $screen - 1px) {
+    @content;
+  }
+}
+
+@mixin w-range($screen1, $screen2) {
+  @media (min-width: $screen1) and (max-width: $screen2 - 1px) {
+    @content;
+  }
+}
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+@function calcFluidFontSize($f-min, $f-max, $w-min, $w-max, $units: px) {
+  $f-min: strip-unit($f-min);
+  $f-max: strip-unit($f-max);
+  $w-min: strip-unit($w-min);
+  $w-max: strip-unit($w-max);
+
+  $k: ($f-max - $f-min)/($w-max - $w-min);
+  $b: $f-min - $k * $w-min;
+
+  $b: $b + $units;
+
+  @return calc( #{$k} * 100vw + #{$b} );
+}
+@mixin fluidFontSize($f-min, $f-max, $w-min, $w-max, $fallback: false) {
+  font-size: $f-min;
+  @media (min-width: $w-min) {
+    @if ($fallback) {
+      font-size: $fallback;
+    }
+    font-size: calcFluidFontSize($f-min, $f-max, $w-min, $w-max, px);
+  }
+  @media (min-width: $w-max) {
+    font-size: $f-max;
+  }
+}
