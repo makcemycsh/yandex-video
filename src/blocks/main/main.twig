@@ -60,7 +60,7 @@
     <div class="b-card mod-s">
       <div class="b-card__head">
         <header>
-          <i class="b-card__ico icon i-key"></i>
+          <i class="b-card__ico icon i-robot"></i>
           <h3 class="b-card__title">
             Уборка закончена
           </h3>
@@ -100,7 +100,7 @@
     <div class="b-card mod-m">
       <div class="b-card__head">
         <header>
-          <i class="b-card__ico icon i-ac"></i>
+          <i class="b-card__ico icon i-kettle"></i>
           <h3 class="b-card__title">
             Изменен климатический режим
           </h3>
@@ -139,7 +139,7 @@
     <div class="b-card mod-m mod-attention">
       <div class="b-card__head">
         <header>
-          <i class="b-card__ico icon i-ac"></i>
+          <i class="b-card__ico icon i-cam"></i>
           <h3 class="b-card__title">
             Невозможно включить кондиционер
           </h3>
@@ -176,12 +176,38 @@
       </div>
       <div class="b-card__main">
         <p class="b-card__text">
-          Кажется, в холодильнике заканчивается молоко. Вы хотите добавить его в список покупок?
+          Сейчас проигрывается:
         </p>
         <div class="b-card__data">
+          <div class="b-music">
+            <div class="b-music__section">
+              <div class="b-music__logo">
+                <img src="assets/img/album-cover.png" alt="Florence">
+              </div>
+              <div class="b-music__info">
+                <p class="b-music__name">
+                  Florence & The Machine - Big God
+                </p>
+                <div class="b-music__duration">
+                  <input id='range-1' type="range" name="volume"
+                         min="0" max="100"/>
+                  <label for="range-1">4:31</label>
+                </div>
+              </div>
+            </div>
+            <div class="b-music__section">
+              <div class="b-music__controls">
+                <button class="b-music__prev icon i-prev"></button>
+                <button class="b-music__next icon i-next"></button>
+                <div class="b-music__val">
+                  <input id='range-2' type="range" name="volume"
+                         min="0" max="100"/>
+                  <label for="range-2">80%</label>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <input type="range" name="volume"
-                 min="0" max="100"/>
         </div>
       </div>
       <button class="b-card__close"><i class="b-card__ico icon i-close"></i>
@@ -272,6 +298,10 @@
         <div class="b-card__data">
           <img src="assets/img/card-1.png" alt="yandex"
                srcset="assets/img/card-1@x2.png 800w, assets/img/card-1@x3.png 1200w">
+          <div class="b-card__stat mod-only-sm">
+            <span>Приближение: 78%</span>
+            <span>Яркость: 50%</span>
+          </div>
         </div>
       </div>
 

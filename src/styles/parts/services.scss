@@ -108,6 +108,10 @@
     box-sizing: border-box;
     @include w-from($screen-md) {
       padding: 0;
+      &__wrap {
+        padding-top:    12px;
+        padding-bottom: 12px;
+      }
       &__menu {
         .b-head__nav-wrap {
           position:   fixed;

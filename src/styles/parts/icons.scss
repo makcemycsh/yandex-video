@@ -14,9 +14,6 @@
   line-height:             1em;
   -webkit-font-smoothing:  antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size:               20px;
-  max-height:              50px;
-  max-width:               50px;
 
   &.i-arrow-r {
     &:after {
@@ -105,8 +102,23 @@
       content: "\e80e";
     }
   }
-  &.i-key {
-    font-size: 2.5em;
+
+  &.i-robot,
+  &.i-battery,
+  &.i-stats {
+    font-size: 1.5625rem;
+  }
+  &.i-cam {
+    font-size: 2.25rem;
+  }
+  &.i-key,
+  &.i-thermal,
+  &.i-fridge,
+  &.i-ac,
+  &.i-router,
+  &.i-music,
+  &.i-kettle {
+    font-size: 2.8125rem;
   }
 }
 
