@@ -62,7 +62,7 @@
   &__trigger {
     position:   absolute;
     top:        50%;
-    right:      .5rem;
+    right:      16px;
     margin-top: -(($bar-thickness*5) / 2);
     padding:    $bar-thickness*2 0;
     transition: 0.2s ease-in-out;
