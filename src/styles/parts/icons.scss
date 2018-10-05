@@ -52,7 +52,7 @@
       content: "\e804";
     }
   }
-  &.i-robot {
+  &.i-robot-cleaner {
     &:after {
       content: "\e805";
     }
@@ -103,7 +103,7 @@
     }
   }
 
-  &.i-robot,
+  &.i-robot-cleaner,
   &.i-battery,
   &.i-stats {
     font-size: 1.5625rem;

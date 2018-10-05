@@ -13,6 +13,7 @@
     margin:          0 auto;
     grid-gap:        16px 0;
     width:           100%;
+    max-width:       500px;
     @include w-from($screen-md) {
       max-width:             1080px;
       grid-template-columns: repeat(6, minmax(100px, 1fr));

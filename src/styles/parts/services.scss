@@ -109,8 +109,7 @@
     @include w-from($screen-md) {
       padding: 0;
       &__wrap {
-        padding-top:    12px;
-        padding-bottom: 12px;
+        padding: 12px 20px;
       }
       &__menu {
         .b-head__nav-wrap {

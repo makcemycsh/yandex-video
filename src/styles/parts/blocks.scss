@@ -4,16 +4,19 @@
 }
 
 .b-data-set {
-  display:   flex;
-  flex-wrap: wrap;
-  margin:    -8px;
+  display:         flex;
+  justify-content: space-between;
+  flex-wrap:       wrap;
+  margin:          -8px;
   &__name {
     white-space: nowrap;
   }
   @extend %span2;
   &__item {
     margin: 8px;
-    flex:   1 1 40%;
+    @include w-from($screen-md) {
+      flex: 1 1 40%;
+    }
   }
   &__val {
     font-weight: bold;
@@ -23,7 +26,8 @@
 .b-btn {
   border:        none;
   outline:       none;
-  min-width:     132px;
+  max-width:     132px;
+  flex:          1 1;
   padding:       16px 24px;
   font-size:     20px;
   line-height:   23px;
@@ -88,16 +92,22 @@
     width:       100%;
     button {
       padding:       0;
-      width:         60px;
-      min-width:     60px;
-      height:        60px;
+      width:         50px;
+      min-width:     50px;
+      height:        50px;
       background:    #ECECEC;
       border-radius: 50%;
       border:        none;
       outline:       none;
       font-size:     50px;
       color:         #8C8B8B;
-      margin-left:   27px;
+      margin-left:   20px;
+      @include w-from($screen-md) {
+        width:       60px;
+        min-width:   60px;
+        height:      60px;
+        margin-left: 27px;
+      }
       &:first-child {
         margin-left: 0;
       }
