@@ -72,11 +72,6 @@
   max-width: 1280px;
 }
 
-.wrapper-1080 {
-  @extend %wrapper;
-  max-width: 1080px;
-}
-
 .mod-only-sm {
   @include w-from($screen-md) {display: none !important;}
   @include w-to($screen-md) {display: initial;}
@@ -119,7 +114,8 @@
           top:        0;
           z-index:    2;
           right:      0;
-          min-width:  250px;
+          max-width:  175px;
+          width:      100%;
           padding:    120px 30px 30px;
           box-sizing: border-box;
           transform:  translateX(100%);
@@ -211,28 +207,5 @@
         }
       }
     }
-  }
-}
-
-.is-fixed {
-  overflow:            hidden;
-  filter:              blur(2px);
-  z-index:             -1;
-  pointer-events:      none;
-  -webkit-user-select: none;
-  -moz-user-select:    none;
-  -ms-user-select:     none;
-  transition:          0.45s ease-in-out;
-  &:after {
-    content:          '';
-    position:         absolute;
-    background-color: #333;
-    opacity:          0.5;
-    width:            150vw;
-    height:           150vh;
-    top:              0;
-    left:             0;
-    z-index:          3;
-    transition:       background-color 0.3s ease-in-out;
   }
 }

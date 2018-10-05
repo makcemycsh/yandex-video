@@ -20,11 +20,11 @@ function handleEvents() {
 
 $.getJSON("assets/json/events.json").done(function (data) {
   $.each(data.events, function (i, item) {
-    insertInTemplate(item);
+    template(item);
   })
 });
 
-function insertInTemplate(event) {
+function template(event) {
   let card = `<div class="b-card mod-${event.size}  ${event.type === 'critical' ? `mod-attention` : ''} ">
       <div class="b-card__head">
         <header>

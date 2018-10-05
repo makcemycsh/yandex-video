@@ -2,8 +2,7 @@
   color:  $text-color-main;
   margin: 0 auto 80px auto;
   &__title {
-    font-size:     2.25rem;
-    line-height:   2.625rem;
+    @extend %h1;
     margin-bottom: 32px;
   }
   &__inner {
@@ -20,5 +19,14 @@
       grid-auto-flow:        dense row;
       grid-gap:              14px 20px;
     }
+    @include w-from($screen-xl) {
+      max-width: 100%;
+    }
+  }
+}
+
+button {
+  &:active {
+    transform: scale(.98);
   }
 }

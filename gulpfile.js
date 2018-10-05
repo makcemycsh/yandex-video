@@ -100,7 +100,10 @@ gulp.task('build:assets', () => {
     .pipe(gulp.dest('build/assets/fonts/'));
 
   gulp.src('src/assets/other/**/*.*')
-    .pipe(gulp.dest('build/assets/other/'));
+  .pipe(gulp.dest('build/assets/other/'));
+
+  gulp.src('src/assets/json/**/*.*')
+  .pipe(gulp.dest('build/assets/json/'));
 
   gulp.src('src/assets/img/**/*.*')
     .pipe(imagemin())

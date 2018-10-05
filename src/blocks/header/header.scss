@@ -32,11 +32,15 @@
       top:        0;
       z-index:    2;
       right:      0;
-      min-width:  50%;
+      width:      100%;
       padding:    120px 30px 30px;
       box-sizing: border-box;
       transform:  translateX(100%);
       transition: transform .45s ease-in-out;
+      max-width:  175px;
+      @include w-from($screen-md) {
+        max-width: 100%;
+      }
       nav {
         display:        flex;
         flex-direction: column;
@@ -104,8 +108,7 @@
         }
       }
       & + .b-head__nav-wrap {
-        transform:  translateX(0%);
-        transition: transform 0.25s ease-in-out;
+        transform: translateX(0%);
       }
     }
     &:after {
