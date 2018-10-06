@@ -27,19 +27,53 @@ function handleEvents() {
   let minImgHeight;
   let maxImgHeight;
   let imgHeight;
+  let curPosX;
+  let curPosY;
+  let difX;
+  let difY;
+  let lastTap;
+  let zoom = false;
+  $(document.body).on('pointerout', '.js-pointer-event', function (e) {
+    console.log('pointerout');
+  });
+  $(document.body).on('pointerleave', '.js-pointer-event', function (e) {
+    console.log('pointerleave');
+  });
   $(document.body).on('pointerover', '.js-pointer-event', function (e) {
     console.log(e.offsetX);
     console.log('pointerover');
   });
   $(document.body).on('pointerenter', '.js-pointer-event', function (e) {
-    console.log(e.offsetX);
+    console.log(e);
     console.log('pointerenter');
+
+
     imgHeight = $($imgWrap, $(this))[0].offsetHeight;
     maxImgHeight = 1.5 * +imgHeight;
     minImgHeight = $imgWrap.parent()[0].offsetHeight;
   });
   $(document.body).on('pointerdown', '.js-pointer-event', function (e) {
-    console.log(e.offsetX);
+    curPosX = e.offsetX;
+    curPosY = e.offsetY;
+
+    let now = new Date().getTime();
+    let timesince = now - lastTap;
+    if ((timesince < 600) && (timesince > 0)) {
+      if (zoom) {
+        zoom = !zoom;
+      }
+      else {
+        // $($imgWrap, $(this)).height(maxImgHeight);
+        console.log('double');
+        zoom = !zoom;
+      }
+
+
+    } else {
+      console.log('none');
+    }
+
+    lastTap = new Date().getTime();
     console.log('pointerdown');
   });
   $(document.body).on('pointerup', '.js-pointer-event', function (e) {
@@ -50,10 +84,21 @@ function handleEvents() {
     // console.log('pointerup');
     // console.log($($imgWrap, $(this))[0].offsetHeight);
   });
-  // $(document.body).on('pointermove', '.js-pointer-event', function (e) {
-  //   console.log(e.offsetX);
-  //   console.log('pointermove');
-  // });
+  $(document.body).on('pointermove', '.js-pointer-event', function (e) {
+    console.log(e);
+    console.log('pointermove');
+    difX = curPosX - e.offsetX;
+    console.log(difX);
+    difX = curPosX - e.clientX;
+    console.log(difX);
+    difY = curPosY - e.clientY;
+    // $(this).css('transform', 'translateX('+ difX +'px)');
+    $('img', $imgWrap).css({
+      'margin-left': difX,
+      'margin-top': difY
+    });
+    console.log('difX: ' + difX);
+  });
 }
 
 function is_touch_device() {
