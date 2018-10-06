@@ -1,3 +1,7 @@
+function is_touch_device() {
+  return !!('ontouchstart' in window);
+}
+
 $(document).ready(handleEvents);
 
 function handleEvents() {
@@ -35,19 +39,12 @@ function handleEvents() {
   let zoom = false;
   let $debag = $('.js-debag');
   $(document.body).on('pointerout', '.js-pointer-event', function (e) {
-    console.log('pointerout');
   });
   $(document.body).on('pointerleave', '.js-pointer-event', function (e) {
-    console.log('pointerleave');
   });
   $(document.body).on('pointerover', '.js-pointer-event', function (e) {
-    console.log(e.offsetX);
-    console.log('pointerover');
   });
   $(document.body).on('pointerenter', '.js-pointer-event', function (e) {
-    console.log(e);
-    console.log('pointerenter');
-    $debag.html('pointerenter');
     $debag.append('<p>pointer.id: ' + e.pointerId + '</p>');
 
 
@@ -77,42 +74,113 @@ function handleEvents() {
     }
 
     lastTap = new Date().getTime();
-    console.log('pointerdown');
   });
   $(document.body).on('pointerup', '.js-pointer-event', function (e) {
-    console.log(imgHeight);
-    console.log(maxImgHeight);
-    console.log(minImgHeight);
     // console.log(e.offsetX);
     // console.log('pointerup');
     // console.log($($imgWrap, $(this))[0].offsetHeight);
   });
   $(document.body).on('pointermove', '.js-pointer-event', function (e) {
-    console.log(e);
-    console.log('pointermove');
-    difX = curPosX - e.offsetX;
-    console.log(difX);
     difX = curPosX - e.clientX;
-    console.log(difX);
     difY = curPosY - e.clientY;
     // $(this).css('transform', 'translateX('+ difX +'px)');
-    $('img', $imgWrap).css({
-      'margin-left': difX,
-      'margin-top': difY
-    });
-    console.log('difX: ' + difX);
-    $debag.append('<p>difX: ' + difX +'</p>');
+    // $('img', $imgWrap).css({
+    //   'margin-left': difX,
+    //   'margin-top': difY
+    // });
 
   });
 }
 
-function is_touch_device() {
-  return !!('ontouchstart' in window);
+class Handler {
+  constructor(selector) {
+    this.selector = $(selector);
+    this.$imgWrap = $('.js-img-wrapper', this.selector);
+    this.img = $('img', this.$imgWrap);
+    this.maxHeight = 1.5;
+    this.minHeight = this.$imgWrap.height();
+
+    this.left = 0;
+    this.top = 0;
+    this.curPosX = 0;
+    this.curPosY = 0;
+    this.difX = 0;
+    this.difY = 0;
+    this.leftLim = 0;
+    this.topLim = 0;
+    $(document).ready(this.console());
+    this.hendlPointerEvents(this.selector);
+  }
+
+  console() {
+    console.log('console');
+    console.log(this.selector);
+    console.log(this.$imgWrap);
+    console.log(this.height);
+    console.log(this.maxHeight);
+    console.log(this.minHeight);
+  }
+
+  getLim() {
+    console.log('getLim');
+    this.topLim = (this.img.height() - this.$imgWrap.height()) / 2;
+    this.leftLim = (this.img.width() - this.$imgWrap.width()) / 2;
+  }
+
+  checkLim() {
+    console.log('checkLim');
+    this.top >= this.topLim ? this.top = this.topLim : '';
+    this.top <= -this.topLim ? this.top = -this.topLim : '';
+
+    this.left >= this.leftLim ? this.left = this.leftLim : '';
+    this.left <= -this.leftLim ? this.left = -this.leftLim : '';
+
+  }
+
+  pointerMove(e) {
+    console.log('pointerMove');
+
+    this.difX = this.curPosX.toFixed(0) - e.clientX.toFixed(0);
+    this.difY = this.curPosY.toFixed(0) - e.clientY.toFixed(0);
+    if (this.difX !== 0) this.difX >= 0 ? this.left += 5 : this.left -= 5;
+    if (this.difY !== 0) this.difY >= 0 ? this.top += 5 : this.top -= 5;
+
+    this.curPosX = e.clientX;
+    this.curPosY = e.clientY;
+
+    this.checkLim();
+    this.img.css({
+      'top': 'calc(50% + ' + this.top + 'px)',
+      'left': 'calc(50% + ' + this.left + 'px)'
+    });
+
+    console.log(e);
+    console.log(this.curPosX);
+    console.log(this.difX);
+    console.log(this.difY);
+  }
+
+  pointerDown(e) {
+    console.log('pointerDown');
+    this.curPosX = e.clientX;
+    this.curPosY = e.clientY;
+    this.getLim();
+  }
+
+  hendlPointerEvents(selector) {
+    console.log('hendlPointerEvents');
+    selector.on('pointermove', e => this.pointerMove(e));
+    selector.on('pointerdown', e => this.pointerDown(e));
+  }
 }
+
 
 $.getJSON("assets/json/events.json").done(function (data) {
   $.each(data.events, function (i, item) {
     template(item);
+  });
+  $('.js-pointer-event').each(function (i, e) {
+    new Handler(e);
   })
 });
 
