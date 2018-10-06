@@ -21,10 +21,39 @@ function handleEvents() {
   if (is_touch_device()) $(document.body).addClass('is-touch');
   else $(document.body).addClass('no-touch');
 
-  $(document.body).on('pointermove', '.js-pointer-event', function (e) {
+
+  let $imgWrap = $('.js-img-wrapper');
+  // let $pointerContainer = $('.js-pointer-event');
+  let minImgHeight;
+  let maxImgHeight;
+  let imgHeight;
+  $(document.body).on('pointerover', '.js-pointer-event', function (e) {
     console.log(e.offsetX);
-    console.log('++++');
-  })
+    console.log('pointerover');
+  });
+  $(document.body).on('pointerenter', '.js-pointer-event', function (e) {
+    console.log(e.offsetX);
+    console.log('pointerenter');
+    imgHeight = $($imgWrap, $(this))[0].offsetHeight;
+    maxImgHeight = 1.5 * +imgHeight;
+    minImgHeight = $imgWrap.parent()[0].offsetHeight;
+  });
+  $(document.body).on('pointerdown', '.js-pointer-event', function (e) {
+    console.log(e.offsetX);
+    console.log('pointerdown');
+  });
+  $(document.body).on('pointerup', '.js-pointer-event', function (e) {
+    console.log(imgHeight);
+    console.log(maxImgHeight);
+    console.log(minImgHeight);
+    // console.log(e.offsetX);
+    // console.log('pointerup');
+    // console.log($($imgWrap, $(this))[0].offsetHeight);
+  });
+  // $(document.body).on('pointermove', '.js-pointer-event', function (e) {
+  //   console.log(e.offsetX);
+  //   console.log('pointermove');
+  // });
 }
 
 function is_touch_device() {
@@ -87,8 +116,10 @@ function dataImage(data) {
   return `<div class="b-card__data js-pointer-event">
           <div class="b-cam">
             <div class="b-cam__img">
+            <div class="b-cam__wrapper js-img-wrapper">
             <img src="assets/img/card-1.png" alt="yandex"
                srcset="assets/img/card-1@x2.png 800w, assets/img/card-1@x3.png 1200w">
+               </div>
                </div>
             <div class="b-cam__stat mod-only-touch">
               <span>Приближение: 78%</span>

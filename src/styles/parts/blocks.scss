@@ -141,14 +141,18 @@
     max-height:    400px;
     border-radius: 20px;
   }
+  &__wrapper {
+    display:         flex;
+    align-items:     flex-start;
+    justify-content: flex-end;
+  }
 }
 
 .is-touch {
   .b-cam__img img {
-    object-fit:      none;
-    width:           auto;
-    height:          auto;
-    object-position: center;
+    width:        auto;
+    height:       100%;
+    touch-action: none;
   }
 }
 
