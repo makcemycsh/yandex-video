@@ -140,19 +140,25 @@ class Handler {
   pointerMove(e) {
     console.log('pointerMove');
 
-    this.difX = this.curPosX.toFixed(0) - e.clientX.toFixed(0);
-    this.difY = this.curPosY.toFixed(0) - e.clientY.toFixed(0);
-    if (this.difX !== 0) this.difX >= 0 ? this.left += 5 : this.left -= 5;
-    if (this.difY !== 0) this.difY >= 0 ? this.top += 5 : this.top -= 5;
+    // this.difX = this.curPosX.toFixed(0) - e.clientX.toFixed(0);
+    // this.difY = this.curPosY.toFixed(0) - e.clientY.toFixed(0);
+    // if (this.difX !== 0) this.difX >= 0 ? this.left += 1 : this.left -= 1;
+    // if (this.difY !== 0) this.difY >= 0 ? this.top += 1 : this.top -= 1;
 
-    this.curPosX = e.clientX;
-    this.curPosY = e.clientY;
-
+    // this.curPosX = e.clientX;
+    // this.curPosY = e.clientY;
+    this.left = e.clientX - this.curPosX;
+    this.top = e.clientY - this.curPosY;
     this.checkLim();
-    this.img.css({
-      'top': 'calc(50% + ' + this.top + 'px)',
-      'left': 'calc(50% + ' + this.left + 'px)'
-    });
+
+    this.img[0].style.left = 'calc(50% + ' + this.left + 'px)';
+    this.img[0].style.top = 'calc(50% + ' + this.top + 'px)';
+
+
+    // this.img.css({
+    //   'top': 'calc(50% + ' + this.top + ' px)',
+    //   'left': 'calc(50% + ' + this.left + ' px)'
+    // });
 
     console.log(e);
     console.log(this.curPosX);
