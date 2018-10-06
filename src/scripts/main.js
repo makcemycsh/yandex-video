@@ -48,7 +48,7 @@ function handleEvents() {
     console.log(e);
     console.log('pointerenter');
     $debag.html('pointerenter');
-    $debag.append(`<p>pointer.id: {e.pointerId}</p>`);
+    $debag.append('<p>pointer.id: ' + e.pointerId + '</p>');
 
 
     imgHeight = $($imgWrap, $(this))[0].offsetHeight;
@@ -101,6 +101,8 @@ function handleEvents() {
       'margin-top': difY
     });
     console.log('difX: ' + difX);
+    $debag.append('<p>difX: ' + difX +'</p>');
+
   });
 }
 
