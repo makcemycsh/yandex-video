@@ -31,7 +31,7 @@
   &__ico {
     margin-right: 20px;
   }
-  &__data {
+  &__data{
     margin-top:      16px;
     display:         flex;
     flex-direction:  column;
@@ -48,7 +48,6 @@
     img {
       flex:          1 1;
       border-radius: 20px;
-      width:         100%;
       object-fit:    cover;
     }
   }

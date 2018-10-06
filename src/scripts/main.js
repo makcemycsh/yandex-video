@@ -109,7 +109,7 @@ class Handler {
 
       if (curDistance !== this.distance) {
         let dif = curDistance - this.distance;
-
+        let newHeight = this.$img.height + dif;
         this.$img.height(this.$img.height + dif);
         this.getLim();
 
@@ -138,6 +138,7 @@ class Handler {
 
   pointerUp(e) {
     this.events = this.events.filter((item) => item.pointerId !== e.originalEvent.pointerId);
+    $('.js-debag').append(e.originalEvent.pointerId);
   }
 
   hendlPointerEvents(selector) {
