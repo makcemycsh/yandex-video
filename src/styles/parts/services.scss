@@ -92,6 +92,17 @@
   @include w-from($screen-lg) {display: none !important;}
 }
 
+.is-touch {
+  .mod-only-touch {
+    display: inherit;
+  }
+}
+.no-touch {
+  .mod-only-touch {
+    display: none !important;
+  }
+}
+
 .head-is-fixed {
   .b-head {
     position:   fixed;

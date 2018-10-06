@@ -16,7 +16,7 @@
   }
 }
 
-@mixin w-range($screen1, $screen2) {
+@mixin w-range($screen1,  $screen2) {
   @media (min-width: $screen1) and (max-width: $screen2 - 1px) {
     @content;
   }

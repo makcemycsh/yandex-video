@@ -16,6 +16,14 @@ function handleEvents() {
   $('.js-menu-bar').on('click', function () {
     $(this).toggleClass('is-active');
   });
+
+  // Проверяем тип устройства
+  if (is_touch_device()) $('body').addClass('is-touch');
+  else  $('body').addClass('no-touch');
+}
+
+function is_touch_device() {
+  return !!('ontouchstart' in window);
 }
 
 $.getJSON("assets/json/events.json").done(function (data) {
@@ -73,7 +81,7 @@ function dataGraph(data) {
 function dataImage(data) {
   return `<img src="assets/img/card-1.png" alt="yandex"
                srcset="assets/img/card-1@x2.png 800w, assets/img/card-1@x3.png 1200w">
-            <div class="b-card__stat mod-only-sm">
+            <div class="b-card__stat mod-only-touch">
               <span>Приближение: 78%</span>
               <span>Яркость: 50%</span>
             </div>`
