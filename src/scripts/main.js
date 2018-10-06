@@ -33,6 +33,7 @@ function handleEvents() {
   let difY;
   let lastTap;
   let zoom = false;
+  let $debag = $('.js-debag');
   $(document.body).on('pointerout', '.js-pointer-event', function (e) {
     console.log('pointerout');
   });
@@ -46,6 +47,8 @@ function handleEvents() {
   $(document.body).on('pointerenter', '.js-pointer-event', function (e) {
     console.log(e);
     console.log('pointerenter');
+    $debag.html('pointerenter');
+    $debag.append(`<p>pointer.id: {e.pointerId}</p>`);
 
 
     imgHeight = $($imgWrap, $(this))[0].offsetHeight;
