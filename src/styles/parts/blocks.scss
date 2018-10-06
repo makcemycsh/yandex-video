@@ -163,9 +163,11 @@
       touch-action:    none;
       user-select:     none;
     }
-    &__img img {
-      width:  auto;
-      height: 100%;
+    &__img {
+      img {
+        width:  auto;
+        height: 100%;
+      }
     }
   }
 }
@@ -191,19 +193,4 @@ $track-color: #979797;
 $track-height: 1px;
 .b-music__info {
   @include range;
-}
-
-.b-debag {
-  position:    fixed;
-  z-index:     999;
-  bottom:      0;
-  width:       100vw;
-  padding:     1rem;
-  box-sizing:  border-box;
-  background:  white;
-  color:       black;
-  font-size:   12px;
-  line-height: 16px;
-  max-height:  300px;
-  overflow:    auto;
 }

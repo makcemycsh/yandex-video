@@ -44,6 +44,9 @@ class Handler {
     this.leftLim = 0;
     this.topLim = 0;
 
+    this.events = [];
+    this.distance = 0;
+
     this.zoom = false;
     this.lastTap = undefined;
     $(document).ready(this.console());
@@ -92,12 +95,30 @@ class Handler {
 
   pointerMove(e) {
     console.log('pointerMove');
-
     this.left = e.clientX - this.curPosX;
     this.top = e.clientY - this.curPosY;
     this.checkLim();
+    this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
 
-    this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)')
+    if (this.events.length === 2) {
+      let x1 = this.events[0].clientX;
+      let y1 = this.events[0].clientY;
+      let x2 = this.events[1].clientX;
+      let y2 = this.events[1].clientY;
+      let curDistance = this.getDistance(x1, y1, x2, y2);
+
+      if (curDistance !== this.distance) {
+        let dif = curDistance - this.distance;
+
+        this.$img.height(this.$img.height + dif);
+        this.getLim();
+
+      }
+    }
+  }
+
+  getDistance(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
   }
 
   pointerDown(e) {
@@ -110,6 +131,13 @@ class Handler {
     let timesince = now - this.lastTap;
     if ((timesince < 500) && (timesince > 0)) this.zoomImg();
     this.lastTap = new Date().getTime();
+    console.log(e.originalEvent);
+    this.events.push(e.originalEvent);
+    console.log(this.events);
+  }
+
+  pointerUp(e) {
+    this.events = this.events.filter((item) => item.pointerId !== e.originalEvent.pointerId);
   }
 
   hendlPointerEvents(selector) {
@@ -117,6 +145,8 @@ class Handler {
     if (is_touch_device()) {
       selector.on('pointermove', e => this.pointerMove(e));
       selector.on('pointerdown', e => this.pointerDown(e));
+      selector.on('pointerup', e => this.pointerUp(e));
+
     }
   }
 }
