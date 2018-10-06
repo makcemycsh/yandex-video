@@ -24,81 +24,16 @@ function handleEvents() {
   // Проверяем тип устройства
   if (is_touch_device()) $(document.body).addClass('is-touch');
   else $(document.body).addClass('no-touch');
-
-
-  let $imgWrap = $('.js-img-wrapper');
-  // let $pointerContainer = $('.js-pointer-event');
-  let minImgHeight;
-  let maxImgHeight;
-  let imgHeight;
-  let curPosX;
-  let curPosY;
-  let difX;
-  let difY;
-  let lastTap;
-  let zoom = false;
-  let $debag = $('.js-debag');
-  $(document.body).on('pointerout', '.js-pointer-event', function (e) {
-  });
-  $(document.body).on('pointerleave', '.js-pointer-event', function (e) {
-  });
-  $(document.body).on('pointerover', '.js-pointer-event', function (e) {
-  });
-  $(document.body).on('pointerenter', '.js-pointer-event', function (e) {
-    $debag.append('<p>pointer.id: ' + e.pointerId + '</p>');
-
-
-    imgHeight = $($imgWrap, $(this))[0].offsetHeight;
-    maxImgHeight = 1.5 * +imgHeight;
-    minImgHeight = $imgWrap.parent()[0].offsetHeight;
-  });
-  $(document.body).on('pointerdown', '.js-pointer-event', function (e) {
-    curPosX = e.offsetX;
-    curPosY = e.offsetY;
-
-    let now = new Date().getTime();
-    let timesince = now - lastTap;
-    if ((timesince < 600) && (timesince > 0)) {
-      if (zoom) {
-        zoom = !zoom;
-      }
-      else {
-        // $($imgWrap, $(this)).height(maxImgHeight);
-        console.log('double');
-        zoom = !zoom;
-      }
-
-
-    } else {
-      console.log('none');
-    }
-
-    lastTap = new Date().getTime();
-  });
-  $(document.body).on('pointerup', '.js-pointer-event', function (e) {
-    // console.log(e.offsetX);
-    // console.log('pointerup');
-    // console.log($($imgWrap, $(this))[0].offsetHeight);
-  });
-  $(document.body).on('pointermove', '.js-pointer-event', function (e) {
-    difX = curPosX - e.clientX;
-    difY = curPosY - e.clientY;
-    // $(this).css('transform', 'translateX('+ difX +'px)');
-    // $('img', $imgWrap).css({
-    //   'margin-left': difX,
-    //   'margin-top': difY
-    // });
-
-  });
 }
 
 class Handler {
   constructor(selector) {
     this.selector = $(selector);
     this.$imgWrap = $('.js-img-wrapper', this.selector);
-    this.img = $('img', this.$imgWrap);
+    this.$img = $('img', this.$imgWrap);
+    this.height = this.$img.height();
     this.maxHeight = 1.5;
-    this.minHeight = this.$imgWrap.height();
+    this.minHeight = this.$imgWrap.parent().height();
 
     this.left = 0;
     this.top = 0;
@@ -108,6 +43,9 @@ class Handler {
     this.difY = 0;
     this.leftLim = 0;
     this.topLim = 0;
+
+    this.zoom = false;
+    this.lastTap = undefined;
     $(document).ready(this.console());
     this.hendlPointerEvents(this.selector);
   }
@@ -121,10 +59,27 @@ class Handler {
     console.log(this.minHeight);
   }
 
+  zoomImg() {
+    console.log('zoom');
+    this.height = this.img.height();
+    console.log(this.maxHeight);
+    console.log(this.minHeight);
+    console.log(this.height);
+    if (this.zoom) {
+      // this.$imgWrap.height(this.maxHeight);
+    } else {
+      this.height = this.$img.height();
+      this.maxHeight = 1.5 * this.height;
+      this.$imgWrap.height(this.maxHeight);
+      this.getLim();
+      this.zoom = !this.zoom;
+    }
+  }
+
   getLim() {
     console.log('getLim');
-    this.topLim = (this.img.height() - this.$imgWrap.height()) / 2;
-    this.leftLim = (this.img.width() - this.$imgWrap.width()) / 2;
+    this.topLim = (this.$imgWrap.height() - this.$imgWrap.parent().height()) / 2;
+    this.leftLim = (this.$imgWrap.width() - this.$imgWrap.parent().width()) / 2;
   }
 
   checkLim() {
@@ -150,15 +105,11 @@ class Handler {
     this.left = e.clientX - this.curPosX;
     this.top = e.clientY - this.curPosY;
     this.checkLim();
+    console.log(this.left);
+    console.log(this.top);
+    this.$imgWrap[0].style.left = 'calc(50% + ' + this.left + 'px)';
+    this.$imgWrap[0].style.top = 'calc(50% + ' + this.top + 'px)';
 
-    this.img[0].style.left = 'calc(50% + ' + this.left + 'px)';
-    this.img[0].style.top = 'calc(50% + ' + this.top + 'px)';
-
-
-    // this.img.css({
-    //   'top': 'calc(50% + ' + this.top + ' px)',
-    //   'left': 'calc(50% + ' + this.left + ' px)'
-    // });
 
     console.log(e);
     console.log(this.curPosX);
@@ -168,9 +119,14 @@ class Handler {
 
   pointerDown(e) {
     console.log('pointerDown');
+    let now = new Date().getTime();
     this.curPosX = e.clientX;
     this.curPosY = e.clientY;
     this.getLim();
+
+    let timesince = now - this.lastTap;
+    if ((timesince < 500) && (timesince > 0)) this.zoomImg();
+    this.lastTap = new Date().getTime();
   }
 
   hendlPointerEvents(selector) {

@@ -137,17 +137,13 @@
   }
   &__img {
     max-width:     100%;
-    overflow:      auto;
     max-height:    400px;
+    min-height:    300px;
+    position:      relative;
     border-radius: 20px;
+    overflow:      hidden;
   }
   &__wrapper {
-    display:         flex;
-    align-items:     flex-start;
-    justify-content: flex-end;
-    overflow:        hidden;
-    position:        relative;
-    min-height:      300px;
     img {
       height: 100%;
     }
@@ -155,15 +151,19 @@
 }
 
 .is-touch {
-  .b-cam__img img {
-    width:        auto;
-    position:     absolute;
-    height:       auto;
-    top:          50%;
-    left:         50%;
-    transform:    translate(-50%, -50%);
-    touch-action: none;
-    user-select:  none;
+  .b-cam {
+    &__wrapper {
+      position:     absolute;
+      top:          50%;
+      left:         50%;
+      transform:    translate(-50%, -50%);
+      touch-action: none;
+      user-select:  none;
+    }
+    &__img img {
+      width:  auto;
+      height: auto;
+    }
   }
 }
 
