@@ -43,7 +43,7 @@ gulp.task('server', () => {
       baseDir: 'build/'
     },
     host:   'localhost',
-    port:   9000,
+    port:   3000,
     notify: false
   });
 });

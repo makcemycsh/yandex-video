@@ -60,17 +60,15 @@ class Handler {
   }
 
   zoomImg() {
-    console.log('zoom');
-    this.height = this.img.height();
-    console.log(this.maxHeight);
-    console.log(this.minHeight);
-    console.log(this.height);
     if (this.zoom) {
-      // this.$imgWrap.height(this.maxHeight);
+      console.log('123');
+      console.log(this.height);
+      this.$img.height(this.height);
+      this.zoom = !this.zoom;
     } else {
       this.height = this.$img.height();
-      this.maxHeight = 1.5 * this.height;
-      this.$imgWrap.height(this.maxHeight);
+      this.maxHeight = 2 * this.height;
+      this.$img.height(this.maxHeight);
       this.getLim();
       this.zoom = !this.zoom;
     }
@@ -95,26 +93,11 @@ class Handler {
   pointerMove(e) {
     console.log('pointerMove');
 
-    // this.difX = this.curPosX.toFixed(0) - e.clientX.toFixed(0);
-    // this.difY = this.curPosY.toFixed(0) - e.clientY.toFixed(0);
-    // if (this.difX !== 0) this.difX >= 0 ? this.left += 1 : this.left -= 1;
-    // if (this.difY !== 0) this.difY >= 0 ? this.top += 1 : this.top -= 1;
-
-    // this.curPosX = e.clientX;
-    // this.curPosY = e.clientY;
     this.left = e.clientX - this.curPosX;
     this.top = e.clientY - this.curPosY;
     this.checkLim();
-    console.log(this.left);
-    console.log(this.top);
-    this.$imgWrap[0].style.left = 'calc(50% + ' + this.left + 'px)';
-    this.$imgWrap[0].style.top = 'calc(50% + ' + this.top + 'px)';
 
-
-    console.log(e);
-    console.log(this.curPosX);
-    console.log(this.difX);
-    console.log(this.difY);
+    this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)')
   }
 
   pointerDown(e) {
@@ -131,8 +114,10 @@ class Handler {
 
   hendlPointerEvents(selector) {
     console.log('hendlPointerEvents');
-    selector.on('pointermove', e => this.pointerMove(e));
-    selector.on('pointerdown', e => this.pointerDown(e));
+    if (is_touch_device()) {
+      selector.on('pointermove', e => this.pointerMove(e));
+      selector.on('pointerdown', e => this.pointerDown(e));
+    }
   }
 }
 
@@ -202,8 +187,8 @@ function dataImage(data) {
                </div>
                </div>
             <div class="b-cam__stat mod-only-touch">
-              <span>Приближение: 78%</span>
-              <span>Яркость: 50%</span>
+              <span>Приближение: <span class="js-zoom">78</span>%</span>
+              <span>Яркость: <span class="brightness">50</span>%</span>
             </div>
             </div>
            </div>`
