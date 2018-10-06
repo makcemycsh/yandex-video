@@ -127,6 +127,31 @@
   }
 }
 
+.b-cam {
+  display:        flex;
+  flex-direction: column;
+  &__stat {
+    display:         flex;
+    justify-content: space-between;
+    margin:          14px 0px 4px;
+  }
+  &__img {
+    max-width:     100%;
+    overflow:      auto;
+    max-height:    400px;
+    border-radius: 20px;
+  }
+}
+
+.is-touch {
+  .b-cam__img img {
+    object-fit:      none;
+    width:           auto;
+    height:          auto;
+    object-position: center;
+  }
+}
+
 $thumb-color: #605757;
 $thumb-radius: 50%;
 $thumb-height: 16px;

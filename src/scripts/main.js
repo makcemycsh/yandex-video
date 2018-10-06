@@ -18,8 +18,13 @@ function handleEvents() {
   });
 
   // Проверяем тип устройства
-  if (is_touch_device()) $('body').addClass('is-touch');
-  else  $('body').addClass('no-touch');
+  if (is_touch_device()) $(document.body).addClass('is-touch');
+  else $(document.body).addClass('no-touch');
+
+  $(document.body).on('pointermove', '.js-pointer-event', function (e) {
+    console.log(e.offsetX);
+    console.log('++++');
+  })
 }
 
 function is_touch_device() {
@@ -62,54 +67,65 @@ function dataMain(data) {
 }
 
 function dataTemplate(data) {
-  return ` <div class="b-card__data">
-  ${data.albumcover ? dataMusic(data) : ''}
+  return `${data.albumcover ? dataMusic(data) : ''}
   ${data.temperature ? dataWeather(data) : ''}
   ${data.buttons ? dataButtons(data) : ''}
   ${data.image ? dataImage(data) : ''}
-  ${data.type === 'graph' ? dataGraph(data) : ''}
-  </div>`;
+  ${data.type === 'graph' ? dataGraph(data) : ''}`;
 }
 
 function dataGraph(data) {
-  return `<picture>
+  return `<div class="b-card__data">
+           <picture>
             <source srcset="assets/img/Richdata.svg" type="image/svg+xml">
             <img src="assets/img/Richdata@2x.png" alt="yandex">
-          </picture>`
+          </picture>
+          </div>`
 }
 
 function dataImage(data) {
-  return `<img src="assets/img/card-1.png" alt="yandex"
+  return `<div class="b-card__data js-pointer-event">
+          <div class="b-cam">
+            <div class="b-cam__img">
+            <img src="assets/img/card-1.png" alt="yandex"
                srcset="assets/img/card-1@x2.png 800w, assets/img/card-1@x3.png 1200w">
-            <div class="b-card__stat mod-only-touch">
+               </div>
+            <div class="b-cam__stat mod-only-touch">
               <span>Приближение: 78%</span>
               <span>Яркость: 50%</span>
-            </div>`
+            </div>
+            </div>
+           </div>`
 }
 
 function dataButtons(data) {
-  return `<div class="b-card__btns">
+  return `<div class="b-card__data">
+            <div class="b-card__btns">
                 ${data.buttons.map(btn => ` <button class="b-btn ${btn === 'Да' ? `mod-yellow` : '' }">${btn}</button>`).join('')}
+            </div>
           </div>`;
 }
 
 function dataWeather(data) {
-  return `<div class="b-data-set">
-            <div class="b-data-set__item">
-              <p class="b-data-set__name">
-                Температура: <span class="b-data-set__val">${data.temperature} C</span>
-              </p>
-            </div>
-            <div class="b-data-set__item">
-              <p class="b-data-set__name">
-                Влажность: <span class="b-data-set__val">${data.humidity}%</span>
-              </p>
+  return `<div class="b-card__data">
+            <div class="b-data-set">
+              <div class="b-data-set__item">
+                <p class="b-data-set__name">
+                  Температура: <span class="b-data-set__val">${data.temperature} C</span>
+                </p>
+              </div>
+              <div class="b-data-set__item">
+                <p class="b-data-set__name">
+                  Влажность: <span class="b-data-set__val">${data.humidity}%</span>
+                </p>
+              </div>
             </div>
           </div>`;
 }
 
 function dataMusic(data) {
-  return ` <div class="b-music">
+  return `<div class="b-card__data"> 
+           <div class="b-music">
             <div class="b-music__section">
               <div class="b-music__logo">
                 <img src="${data.albumcover}" alt="${data.artist}">
@@ -136,7 +152,8 @@ function dataMusic(data) {
                 </div>
               </div>
             </div>
-          </div>`;
+          </div>
+        </div>`;
 }
 
 function insertHtml($parent, $content) {

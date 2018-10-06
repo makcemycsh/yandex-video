@@ -61,13 +61,9 @@
     text-overflow:      ellipsis;
     max-height:         2.5em;
   }
-  &__stat,
   &__info {
     display:         flex;
     justify-content: space-between;
-  }
-  &__stat {
-    margin: 14px 0px 4px;
   }
   &__close {
     @extend %click-area;
