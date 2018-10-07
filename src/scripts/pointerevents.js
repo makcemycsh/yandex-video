@@ -62,9 +62,7 @@ class Handler {
     if (this.newHeight <= this.minHeight) this.newHeight = this.minHeight;
 
     this.$img.height(this.newHeight);
-
-    this.getLim();
-    this.moveScroll();
+    this.moveImg();
   }
 
   handelRotate(change) {
@@ -85,8 +83,7 @@ class Handler {
       this.$img.height(this.maxHeight);
       this.zoom = !this.zoom;
     }
-    this.getLim();
-    this.moveScroll();
+    this.moveImg();
     this.changeZoom(this.$img, this.brightness);
   }
 
@@ -138,7 +135,6 @@ class Handler {
     this.oldDistance = undefined;
     this.oldRotate = undefined;
 
-
     this.getLim();
 
     if (this.events.length === 2) this.fixed = true;
@@ -149,16 +145,19 @@ class Handler {
     }
   }
 
+  moveImg() {
+    this.getLim();
+    this.checkLim();
+    this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
+    this.moveScroll();
+  }
+
   pointerMove(e) {
     if (this.events.length === 1 && !this.fixed) {
 
       this.left += e.clientX - this.oldLeft;
       this.top += e.clientY - this.oldTop;
-
-      this.checkLim();
-      this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
-      this.moveScroll();
-
+      this.moveImg();
       this.oldLeft = e.clientX;
       this.oldTop = e.clientY;
 
