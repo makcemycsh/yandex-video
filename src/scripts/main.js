@@ -84,8 +84,8 @@ function dataImage(data) {
                 <div class="b-cam__scroll mod-only-touch js-scroll"></div>
                </div>
             <div class="b-cam__stat mod-only-touch">
-              <span>Приближение: <span class="js-zoom">78</span>%</span>
-              <span>Яркость: <span class="brightness">50</span>%</span>
+              <span>Приближение: <span class="js-zoom">45</span>%</span>
+              <span>Яркость: <span class="js-brightness">50</span>%</span>
             </div>
             </div>
            </div>`
