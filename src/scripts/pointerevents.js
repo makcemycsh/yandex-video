@@ -14,21 +14,25 @@ class Handler {
     this.$scroll = $('.js-scroll', this.selector);
 
     this.height = this.$img.height();
-    this.minHeight = this.$imgWrap.parent().height();
+    this.minHeight = 300;
+    this.maxHeight = 1000;
 
     this.left = 0;
     this.top = 0;
     this.oldLeft = 0;
     this.oldTop = 0;
+    this.leftLim = 0;
+    this.topLim = 0;
+
     this.curPosX = 0;
     this.curPosY = 0;
     this.difX = 0;
     this.difY = 0;
-    this.leftLim = 0;
-    this.topLim = 0;
 
     this.events = [];
     this.distance = 0;
+    this.oldDistance = undefined;
+    this.newDistamce = 0;
 
     this.zoom = false;
     this.lastTap = undefined;
@@ -43,9 +47,10 @@ class Handler {
       this.height = this.$img.height();
       this.maxHeight = 2 * this.height;
       this.$img.height(this.maxHeight);
-      this.getLim();
       this.zoom = !this.zoom;
     }
+    this.getLim();
+    this.moveScroll();
   }
 
   getLim() {
@@ -61,45 +66,48 @@ class Handler {
     this.left <= -this.leftLim ? this.left = -this.leftLim : '';
   }
 
+  handlePinch() {
+    this.distance = this.newDistamce - this.oldDistance;
+    if (this.$img.height() + this.distance >= this.maxHeight) this.$img.height(this.maxHeight);
+    else if (this.$img.height() + this.distance <= this.minHeight) this.$img.height(this.minHeight);
+    else {this.$img.height(this.$img.height() + this.distance);}
+
+    this.oldDistance = this.newDistamce;
+    this.getLim();
+    this.moveScroll();
+    // $('.js-debag').append('<div>' + this.$img.height() + '</div>');
+
+  }
+
   pointerMove(e) {
-    if (this.events.length === 2) {
-      console.log(e.identifier);
-      $('.js-debag').append('<div>' + this.events + '</div>');
-
-      let x1, y1, x2, y2;
-      if (e.originalEvent.pointerId === this.events[0]) {
-        x1 = e.clientX;
-        y1 = e.clientY;
-      } else if (e.originalEvent.pointerId === this.events[1]) {
-        x2 = e.clientX;
-        y2 = e.clientY;
-      }
-      $('.js-debag').append('<div>' + x1 + ' ' + y1 + ' ' + x2 + ' ' + y2 + '</div>');
-
-      let curDistance = this.getDistance(x1, y1, x2, y2);
-      $('.js-debag').append('<div>' + curDistance + '</div>');
-
-      // if (curDistance !== this.distance) {
-      //   let dif = curDistance - this.distance;
-      //   let newHeight = this.$img.height + dif;
-      //   this.$img.height(this.$img.height + dif);
-      //   this.getLim();
-      //   $('.js-debag').append('<div>' + dif + '</div>');
-      //
-      // }
-    } else {
+    if (this.events.length === 1) {
 
       this.left += e.clientX - this.oldLeft;
       this.top += e.clientY - this.oldTop;
 
       this.checkLim();
       this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
-      this.$scroll.css('left', this.moveScroll() + '%');
+      this.moveScroll();
+
       this.oldLeft = e.clientX;
       this.oldTop = e.clientY;
 
+    } else {
+
+      let curId = e.originalEvent.pointerId;
+      let curObj = this.events.filter(item => item.id === curId)[0];
+      curObj.clientX = e.clientX;
+      curObj.clientY = e.clientY;
+
+      let x1 = this.events[0].clientX;
+      let y1 = this.events[0].clientY;
+      let x2 = this.events[1].clientX;
+      let y2 = this.events[1].clientY;
+      this.newDistamce = this.getDistance(x1, y1, x2, y2);
+      if (!this.oldDistance) this.oldDistance = this.getDistance(x1, y1, x2, y2);
+      this.handlePinch();
+
     }
-    // $('.js-debag').append('<div>' + e.pointerId + '</div>');
   }
 
   getDistance(x1, y1, x2, y2) {
@@ -113,29 +121,32 @@ class Handler {
     persent = persent * 0.7 + start;
     persent > end ? persent = end : '';
     persent < start ? persent = start : '';
-    return persent;
+    this.$scroll.css('left', persent + '%');
   }
 
   pointerDown(e) {
-    console.log(e);
-    console.log('pointerDown');
+    this.events.push({
+      id: e.originalEvent.pointerId,
+      clientX: e.clientX,
+      clientY: e.clientY
+    });
     let now = new Date().getTime();
     this.curPosX = e.clientX;
     this.curPosY = e.clientY;
     this.oldLeft = e.clientX;
     this.oldTop = e.clientY;
-    this.getLim();
 
-    let timesince = now - this.lastTap;
-    if ((timesince < 300) && (timesince > 0)) this.zoomImg();
-    this.lastTap = new Date().getTime();
-    console.log(e.originalEvent);
-    this.events.push(e.originalEvent.pointerId);
-    console.log(this.events);
+    this.getLim();
+    if (this.events.length > 1) {
+      let timesince = now - this.lastTap;
+      if ((timesince < 300) && (timesince > 100)) this.zoomImg();
+      this.lastTap = new Date().getTime();
+    }
   }
 
   pointerUp(e) {
-    this.events = this.events.filter((item) => item !== e.originalEvent.pointerId);
+    console.log('pointerup');
+    this.events = this.events.filter((item) => item.id !== e.originalEvent.pointerId);
   }
 
   hendlPointerEvents(selector) {
@@ -143,7 +154,7 @@ class Handler {
     if (is_touch_device()) {
       selector.on('pointermove', e => this.pointerMove(e));
       selector.on('pointerdown', e => this.pointerDown(e));
-      selector.on('pointerup', e => this.pointerUp(e));
+      selector.on('pointerup pointercancel pointerleave pointerout', e => this.pointerUp(e));
 
     }
   }
