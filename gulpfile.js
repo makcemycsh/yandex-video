@@ -36,11 +36,11 @@ const knownOptions = {
 
 const options = minimist(process.argv.slice(2), knownOptions);
 
-// 1. Девсервер на build/
+// 1. Девсервер на docs/
 gulp.task('server', () => {
   browserSync.init({
     server: {
-      baseDir: 'build/'
+      baseDir: 'docs/'
     },
     host:   'localhost',
     port:   9000,
@@ -51,20 +51,20 @@ gulp.task('server:refresh', () => {
   browserSync.reload();
 });
 gulp.task('server:inject', () => {
-  gulp.src('build/styles/**/*.*')
+  gulp.src('docs/styles/**/*.*')
     .pipe(browserSync.stream());
 });
 
 // 2. Билды
-gulp.task('build:html', () => {
+gulp.task('docs:html', () => {
   gulp.src([
       'src/pages/*.twig',
       'src/pages/*.html'
     ])
     .pipe(twig())
-    .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest('docs/'));
 });
-gulp.task('build:styles', () => {
+gulp.task('docs:styles', () => {
   gulp.src('src/styles/*.scss')
     .pipe(sourcemaps.init())
     .pipe(plumber(handleError))
@@ -78,12 +78,12 @@ gulp.task('build:styles', () => {
       cssnano({zindex: false, reduceIdents: false})
     ]))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('build/styles/'));
+    .pipe(gulp.dest('docs/styles/'));
 });
-gulp.task('build:scripts', () => {
+gulp.task('docs:scripts', () => {
   gulp.src('src/scripts/vendor/*.js')
     .pipe(uglify())
-    .pipe(gulp.dest('build/scripts/vendor/'));
+    .pipe(gulp.dest('docs/scripts/vendor/'));
 
   gulp.src('src/scripts/*.js')
   .pipe(sourcemaps.init())
@@ -93,61 +93,61 @@ gulp.task('build:scripts', () => {
     }))
     .pipe(uglify())
   .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest('build/scripts/'));
+  .pipe(gulp.dest('docs/scripts/'));
 });
-gulp.task('build:assets', () => {
+gulp.task('docs:assets', () => {
   gulp.src('src/assets/fonts/**/*.*')
-    .pipe(gulp.dest('build/assets/fonts/'));
+    .pipe(gulp.dest('docs/assets/fonts/'));
 
   gulp.src('src/assets/other/**/*.*')
-  .pipe(gulp.dest('build/assets/other/'));
+  .pipe(gulp.dest('docs/assets/other/'));
 
   gulp.src('src/assets/json/**/*.*')
-  .pipe(gulp.dest('build/assets/json/'));
+  .pipe(gulp.dest('docs/assets/json/'));
 
   gulp.src('src/assets/img/**/*.*')
     .pipe(imagemin())
-    .pipe(gulp.dest('build/assets/img/'));
+    .pipe(gulp.dest('docs/assets/img/'));
 
   gulp.src('src/assets/favicon/**/*.*')
-    .pipe(gulp.dest('build/assets/favicon/'));
+    .pipe(gulp.dest('docs/assets/favicon/'));
 });
 
 // 3. Вотчеры
-gulp.task('watch:build', ['server', 'build:html', 'build:styles', 'build:scripts', 'build:assets'], () => {
+gulp.task('watch:docs', ['server', 'docs:html', 'docs:styles', 'docs:scripts', 'docs:assets'], () => {
   watch([
     'src/pages/**/*.twig',
     'src/pages/**/*.html',
     'src/blocks/**/*.twig',
     'src/blocks/**/*.html'
-  ], batch((e, end) => {gulp.start('build:html', end);}));
+  ], batch((e, end) => {gulp.start('docs:html', end);}));
 
   watch([
     'src/styles/**/*.*',
     'src/blocks/**/*.scss'
-  ], batch((e, end) => {gulp.start('build:styles', end);}));
+  ], batch((e, end) => {gulp.start('docs:styles', end);}));
 
 
-  watch('src/scripts/**/*.*', batch((e, end) => {gulp.start('build:scripts', end);}));
-  watch('src/assets/**/*.*', batch((e, end) => {gulp.start('build:assets', end);}));
+  watch('src/scripts/**/*.*', batch((e, end) => {gulp.start('docs:scripts', end);}));
+  watch('src/assets/**/*.*', batch((e, end) => {gulp.start('docs:assets', end);}));
 });
 gulp.task('watch:update', () => {
   watch([
-    'build/*.html',
-    'build/scripts/**/*.*',
-    'build/assets/**/*.*'
+    'docs/*.html',
+    'docs/scripts/**/*.*',
+    'docs/assets/**/*.*'
   ], batch((e, end) => {gulp.start('server:refresh', end);}));
 
-  watch('build/styles/**/*.css', batch((e, end) => {gulp.start('server:inject', end);}));
+  watch('docs/styles/**/*.css', batch((e, end) => {gulp.start('server:inject', end);}));
 });
 
 // 3. Shell-задачи
 gulp.task('createBlock', () => {
   gulp.src('').pipe(exec(`sh tasks/createBlock.sh ${options.name}`));
 });
-gulp.task('clearBuild', () => {
-  gulp.src('').pipe(exec(`rm -rf build/`));
+gulp.task('cleardocs', () => {
+  gulp.src('').pipe(exec(`rm -rf docs/`));
 });
 
-gulp.task('default', ['watch:build', 'watch:update']);
-gulp.task('build', ['build:html', 'build:styles', 'build:scripts', 'build:assets']);
+gulp.task('default', ['watch:docs', 'watch:update']);
+gulp.task('docs', ['docs:html', 'docs:styles', 'docs:scripts', 'docs:assets']);
