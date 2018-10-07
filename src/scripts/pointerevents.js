@@ -15,7 +15,7 @@ class Handler {
     this.$zoom = $('.js-zoom', this.selector);
     this.$brightness = $('.js-brightness', this.selector);
 
-    this.height = undefined
+    this.height = undefined;
     this.newHeight = undefined;
     this.minHeight = 300;
     this.maxHeight = 1000;
@@ -60,7 +60,6 @@ class Handler {
     this.newHeight += this.distance;
     if (this.newHeight >= this.maxHeight) this.newHeight = this.maxHeight;
     if (this.newHeight <= this.minHeight) this.newHeight = this.minHeight;
-    // $('.js-debag').append('<p>pointer.id: ' + this.distance + '</p>');
 
     this.$img.height(this.newHeight);
 
