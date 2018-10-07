@@ -163,6 +163,9 @@
       touch-action:    none;
       user-select:     none;
     }
+    &__stat {
+      margin-right: 30px;
+    }
     &__img {
       img {
         max-height: 100%;

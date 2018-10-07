@@ -15,7 +15,8 @@ class Handler {
     this.$zoom = $('.js-zoom', this.selector);
     this.$brightness = $('.js-brightness', this.selector);
 
-    this.height = this.$img.height();
+    this.height = undefined
+    this.newHeight = undefined;
     this.minHeight = 300;
     this.maxHeight = 1000;
 
@@ -28,6 +29,7 @@ class Handler {
     this.brightness = 50;
 
     this.events = [];
+
     this.distance = 0;
     this.oldDistance = undefined;
     this.newDistamce = 0;
@@ -36,10 +38,42 @@ class Handler {
     this.oldRotate = undefined;
     this.newRotate = 0;
 
-
     this.zoom = false;
+    this.fixed = false;
     this.lastTap = undefined;
     this.hendlPointerEvents(this.selector);
+    this.handelRotate(0);
+  }
+
+// Лимит для скролла изображения
+  checkLim() {
+    this.top >= this.topLim ? this.top = this.topLim : '';
+    this.top <= -this.topLim ? this.top = -this.topLim : '';
+
+    this.left >= this.leftLim ? this.left = this.leftLim : '';
+    this.left <= -this.leftLim ? this.left = -this.leftLim : '';
+  }
+
+  handlePinch() {
+    if (!this.newHeight) this.newHeight = this.$img.height();
+    this.distance = 10 * Math.sign(this.distance);
+    this.newHeight += this.distance;
+    if (this.newHeight >= this.maxHeight) this.newHeight = this.maxHeight;
+    if (this.newHeight <= this.minHeight) this.newHeight = this.minHeight;
+    // $('.js-debag').append('<p>pointer.id: ' + this.distance + '</p>');
+
+    this.$img.height(this.newHeight);
+
+    this.getLim();
+    this.moveScroll();
+  }
+
+  handelRotate(change) {
+    this.brightness += change;
+    if (this.brightness >= 100) this.brightness = 100;
+    if (this.brightness <= 0) this.brightness = 0;
+    this.$brightness.html(this.brightness);
+    this.changeBrightness(this.$img, this.brightness);
   }
 
   zoomImg() {
@@ -54,42 +88,7 @@ class Handler {
     }
     this.getLim();
     this.moveScroll();
-    this.setBrightness();
-  }
-
-  getLim() {
-    this.topLim = (this.$imgWrap.height() - this.$imgWrap.parent().height()) / 2;
-    this.leftLim = (this.$imgWrap.width() - this.$imgWrap.parent().width()) / 2;
-  }
-
-  checkLim() {
-    this.top >= this.topLim ? this.top = this.topLim : '';
-    this.top <= -this.topLim ? this.top = -this.topLim : '';
-
-    this.left >= this.leftLim ? this.left = this.leftLim : '';
-    this.left <= -this.leftLim ? this.left = -this.leftLim : '';
-  }
-
-  handlePinch() {
-    // this.distance = this.newDistamce - this.oldDistance;
-    if (this.$img.height() + this.distance >= this.maxHeight) this.$img.height(this.maxHeight);
-    else if (this.$img.height() + this.distance <= this.minHeight) this.$img.height(this.minHeight);
-    else {this.$img.height(this.$img.height() + this.distance);}
-
-    // this.oldDistance = this.newDistamce;
-    this.getLim();
-    this.moveScroll();
-    // $('.js-debag').append('<div>' + this.$img.height() + '</div>');
-
-  }
-
-  handelRotate(change) {
-    this.brightness += change;
-    if (this.brightness >= 100) this.brightness = 100;
-    if (this.brightness <= 0) this.brightness = 0;
-    this.$brightness.html(this.brightness);
-    this.changeBrightness(this.$img, this.brightness);
-
+    this.changeZoom(this.$img, this.brightness);
   }
 
   // Меняем яркость от 50 до 150
@@ -100,56 +99,14 @@ class Handler {
     })
   }
 
-  setBrightness() {
+  changeZoom() {
     let zoom = (this.$img.height() * 0.1).toFixed(0);
     $(this.$zoom).html(zoom);
   }
 
-  pointerMove(e) {
-    if (this.events.length === 1) {
-
-      this.left += e.clientX - this.oldLeft;
-      this.top += e.clientY - this.oldTop;
-
-      this.checkLim();
-      this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
-      this.moveScroll();
-
-      this.oldLeft = e.clientX;
-      this.oldTop = e.clientY;
-
-    } else if (this.events.length === 2) {
-      let curId = e.originalEvent.pointerId;
-      let curObj = this.events.filter(item => item.id === curId)[0];
-      curObj.clientX = e.clientX;
-      curObj.clientY = e.clientY;
-
-      let x1 = this.events[0].clientX;
-      let y1 = this.events[0].clientY;
-      let x2 = this.events[1].clientX;
-      let y2 = this.events[1].clientY;
-
-      if (!this.oldRotate) this.oldDistance = this.getAngle(x1, y1, x2, y2);
-      if (!this.oldDistance) this.oldDistance = this.getDistance(x1, y1, x2, y2);
-
-      this.newRotate = this.getAngle(x1, y1, x2, y2);
-      this.rotate = this.newRotate - this.oldRotate;
-      this.oldRotate = this.newRotate;
-      // this.brightness
-
-      this.newDistamce = this.getDistance(x1, y1, x2, y2);
-      this.distance = this.newDistamce - this.oldDistamce;
-      this.oldDistamce = this.newDistamce;
-
-      // $('.js-debag').append('<div>Rotate: ' + th/is.rotate + '</div>');
-      // $('.js-debag').append('<div>Distance: ' + this.distance + '</div>');
-
-      //Отделяем поворот от зума
-      Math.abs(this.distance) > 5 && this.handlePinch();
-      Math.abs(this.rotate) > 3 && this.handelRotate(Math.sign(this.rotate));
-
-    }
-    this.setBrightness();
+  getLim() {
+    this.topLim = (this.$imgWrap.height() - this.$imgWrap.parent().height()) / 2;
+    this.leftLim = (this.$imgWrap.width() - this.$imgWrap.parent().width()) / 2;
   }
 
   getDistance(x1, y1, x2, y2) {
@@ -177,25 +134,75 @@ class Handler {
       clientY: e.clientY
     });
     let now = new Date().getTime();
-    this.curPosX = e.clientX;
-    this.curPosY = e.clientY;
     this.oldLeft = e.clientX;
     this.oldTop = e.clientY;
     this.oldDistance = undefined;
     this.oldRotate = undefined;
 
+
     this.getLim();
+
+    if (this.events.length === 2) this.fixed = true;
     if (this.events.length === 1) {
       let timesince = now - this.lastTap;
-      if ((timesince < 300) && (timesince > 0)) this.zoomImg();
+      if ((timesince < 300) && (timesince > 0)) this.zoomImg();     // Двойной тап
       this.lastTap = new Date().getTime();
     }
   }
 
-  pointerUp(e) {
-    this.events = this.events.filter((item) => item.id !== e.originalEvent.pointerId);
+  pointerMove(e) {
+    if (this.events.length === 1 && !this.fixed) {
+
+      this.left += e.clientX - this.oldLeft;
+      this.top += e.clientY - this.oldTop;
+
+      this.checkLim();
+      this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
+      this.moveScroll();
+
+      this.oldLeft = e.clientX;
+      this.oldTop = e.clientY;
+
+    } else if (this.events.length === 2) {
+      let curId = e.originalEvent.pointerId;
+      let curObj = this.events.filter(item => item.id === curId)[0];
+      curObj.clientX = e.clientX;
+      curObj.clientY = e.clientY;
+
+      let x1 = this.events[0].clientX;
+      let y1 = this.events[0].clientY;
+      let x2 = this.events[1].clientX;
+      let y2 = this.events[1].clientY;
+
+      this.newDistamce = this.getDistance(x1, y1, x2, y2);
+      this.newRotate = this.getAngle(x1, y1, x2, y2);
+
+
+      if (!this.oldRotate) this.oldRotate = this.newRotate;
+      if (!this.oldDistance) this.oldDistance = this.newDistamce;
+
+      this.rotate = this.newRotate - this.oldRotate;
+      this.oldRotate = this.newRotate;
+
+
+      this.distance = this.newDistamce - this.oldDistamce;
+      this.oldDistamce = this.newDistamce;
+
+      //Отделяем поворот от зума
+      Math.abs(this.distance) > 5 && this.handlePinch();
+      Math.abs(this.rotate) > 2 && this.handelRotate(Math.sign(this.rotate));
+
+    }
+    this.changeZoom();
   }
 
+  pointerUp(e) {
+    this.events = this.events.filter((item) => item.id !== e.originalEvent.pointerId);
+    if (this.events.length === 0) this.fixed = false;
+
+  }
+
+  // Обработчики событий
   hendlPointerEvents(selector) {
     if (is_touch_device()) {
       selector.on('pointermove', e => this.pointerMove(e));
