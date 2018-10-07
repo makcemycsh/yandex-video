@@ -142,12 +142,10 @@
     position:      relative;
     border-radius: 20px;
     overflow:      hidden;
-  }
-  &__wrapper {
     img {
       height:     100%;
       max-height: 300px;
-      width:      auto;
+      min-width:  100%;
     }
   }
 }
@@ -167,9 +165,19 @@
     }
     &__img {
       img {
-        width:  auto;
-        height: 100%;
+        max-height: 100%;
+        min-width:  auto;
       }
+    }
+    &__scroll {
+      width:         20%;
+      height:        5px;
+      background:    rgba(black, .5);
+      border-radius: 3px;
+      position:      absolute;
+      bottom:        5px;
+      left:          50%;
+      transform:     translateX(-50%);
     }
   }
 }
@@ -198,16 +206,18 @@ $track-height: 1px;
 }
 
 .b-debag {
-  position:    fixed;
-  z-index:     999;
-  bottom:      0;
-  width:       100vw;
-  padding:     1rem;
-  box-sizing:  border-box;
-  background:  white;
-  color:       black;
-  font-size:   12px;
-  line-height: 16px;
-  max-height:  300px;
-  overflow:    auto;
+  position:       fixed;
+  z-index:        999;
+  bottom:         0;
+  width:          100vw;
+  padding:        1rem;
+  box-sizing:     border-box;
+  background:     white;
+  color:          black;
+  font-size:      12px;
+  line-height:    16px;
+  max-height:     200px;
+  overflow:       auto;
+  display:        flex;
+  flex-direction: column;
 }
