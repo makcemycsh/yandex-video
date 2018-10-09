@@ -123,6 +123,13 @@ class Handler {
     this.$scroll.css('left', persent + '%');
   }
 
+  moveImg() {
+    this.getLim();
+    this.checkLim();
+    this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
+    this.moveScroll();
+  }
+
   pointerDown(e) {
     this.events.push({
       id: e.originalEvent.pointerId,
@@ -145,12 +152,7 @@ class Handler {
     }
   }
 
-  moveImg() {
-    this.getLim();
-    this.checkLim();
-    this.$img.css('transform', 'translate(' + this.left + 'px, ' + this.top + 'px)');
-    this.moveScroll();
-  }
+
 
   pointerMove(e) {
     if (this.events.length === 1 && !this.fixed) {
