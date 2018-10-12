@@ -26,7 +26,8 @@
 .b-btn {
   border:        none;
   outline:       none;
-  max-width:     132px;
+  max-width:     142px;
+  width:         auto;
   flex:          1 1;
   padding:       16px 24px;
   font-size:     20px;
@@ -194,6 +195,7 @@ $thumb-width: 16px;
 $track-color: #D8D8D8;
 $track-height: 4px;
 $track-radius: 2px;
+.b-range,
 .b-music__val {
   @include range;
 }

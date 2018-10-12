@@ -1,13 +1,14 @@
 <div class="b-head js-head">
   <div class="b-head__wrap wrapper-1280">
-    <a class="b-head__logo" href="#"></a>
+    <a class="b-head__logo" href="index.html"></a>
     <div class="b-head__menu">
       <div class="b-head__trigger js-menu-bar">
         <div class="b-bars"></div>
       </div>
       <div class="b-head__nav-wrap">
         <nav>
-          <a href="#" class="mod-active">События</a>
+          <a href="index.html" {% if nav.main %} class="mod-active" {% endif %} >События</a>
+          <a href="camera.html" {% if nav.camera %} class="mod-active" {% endif %} >Камера</a>
           <a href="#">Сводка</a>
           <a href="#">Устройства</a>
           <a href="#">Сценарии</a>

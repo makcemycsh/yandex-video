@@ -97,6 +97,7 @@
     display: inherit;
   }
 }
+
 .no-touch {
   .mod-only-touch {
     display: none !important;
@@ -217,6 +218,30 @@
           transform: translate(-50%, -50%);
         }
       }
+    }
+  }
+}
+
+body {
+  &:after {
+    content:        '';
+    position:       absolute;
+    top:            0;
+    left:           0;
+    bottom:         0;
+    right:          0;
+    background:     black;
+    opacity:        0;
+    transition:     .15s ease-in-out;
+    pointer-events: none;
+    z-index:        100;
+    height:         100%;
+  }
+  &.mod-video {
+    overflow: hidden;
+    &:after {
+      opacity:    1;
+      transition: .25s ease-in-out;
     }
   }
 }

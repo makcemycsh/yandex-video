@@ -120,7 +120,7 @@ class Handler {
     persent = persent * 0.7 + start;
     persent > end ? persent = end : '';
     persent < start ? persent = start : '';
-    this.$scroll.css('left', persent + '%');
+    this.$scroll.css('left', -persent + '%');
   }
 
   moveImg() {
