@@ -1,7 +1,7 @@
 {
-  "name": "eventfeed",
-  "version": "1.0.0",
-  "description": "layout event feed",
+  "name": "camera",
+  "version": "1.0.1",
+  "description": "layout camera",
   "author": "Shilov Maxim",
   "license": "ISC",
   "dependencies": {

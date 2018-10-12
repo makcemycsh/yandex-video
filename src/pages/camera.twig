@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+{% include "parts/meta.html" %}
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<body class="b-page">
+
+{% set nav = {camera: true} %}
+{% include "../blocks/header/header.twig" %}
+
+
+<section class="b-content  wrapper-1280">
+  {% set header = {title: "Камера"} %}
+  {% include "../blocks/title/title.twig" %}
+  {% include "../blocks/camera/camera.html" %}
+</section>
+{% include "../blocks/footer/footer.html" %}
+{% include "parts/scripts.html" %}
+
+</body>
+</html>

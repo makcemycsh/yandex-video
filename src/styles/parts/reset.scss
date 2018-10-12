@@ -1,7 +1,6 @@
 html,
 body {
-  height: 100%;
-  width:  100%;
+  width: 100%;
   @include fluidFontSize(11px, 16px, 768px, 960px, 16px);
   @include w-from($screen-lg) {
     @include fluidFontSize(16px, 18px, 1440px, 1600px, 18px);
@@ -13,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   min-width:              320px;
   font-family:            $font-family-sans;
+  position:               relative;
 }
 
 figure {

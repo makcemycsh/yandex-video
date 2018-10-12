@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[L] Умный дом</title>
+  <meta name="description" content="...">
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" type="image/png" href="assets/favicon/favicon.png" sizes="16x16">
+  <!--<link rel="apple-touch-icon" href="assets/favicon/favicon-114-iphone.png">-->
+  <!--<link rel="icon" type="image/png" href="assets/favicon/favicon-64.png" sizes="64x64">-->
+
+  <!-- Opengraph -->
+  <!--<meta property="og:locale" content="ru_RU">-->
+  <!--<meta property="og:type" content="website">-->
+  <!--<meta property="og:url" content="...">-->
+  <!--<meta property="og:title" content="...">-->
+  <!--<meta property="og:description" content="...">-->
+  <!--<meta property="og:image" content="...">-->
+  <!--<meta property="og:image:width" content="400" />-->
+  <!--<meta property="og:image:height" content="300" />-->
+
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<body class="b-page">
+
+<div class="b-head js-head">
+  <div class="b-head__wrap wrapper-1280">
+    <a class="b-head__logo" href="index.html"></a>
+    <div class="b-head__menu">
+      <div class="b-head__trigger js-menu-bar">
+        <div class="b-bars"></div>
+      </div>
+      <div class="b-head__nav-wrap">
+        <nav>
+          <a href="index.html"  >События</a>
+          <a href="camera.html"  class="mod-active"  >Камера</a>
+          <a href="#">Сводка</a>
+          <a href="#">Устройства</a>
+          <a href="#">Сценарии</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="b-content  wrapper-1280">
+      <h1 class="b-content__title">Камера</h1>
+  <div class="b-camera">
+  <div class="b-camera__item">
+    <div class="b-camera__inner js-camera" data-contrast="100" data-brightness="100">
+      <video id="video-1" class="b-video" muted autoplay></video>
+    </div>
+  </div>
+  <div class="b-camera__item">
+    <div class="b-camera__inner js-camera" data-contrast="100" data-brightness="100">
+      <video id="video-2" class="b-video" muted autoplay></video>
+    </div>
+  </div>
+  <div class="b-camera__item">
+    <div class="b-camera__inner js-camera" data-contrast="100" data-brightness="100">
+      <video id="video-3" class="b-video" muted autoplay></video>
+    </div>
+  </div>
+  <div class="b-camera__item">
+    <div class="b-camera__inner js-camera" data-contrast="100" data-brightness="100">
+      <video id="video-4" class="b-video" muted autoplay></video>
+    </div>
+  </div>
+  <div class="b-camera__controls">
+    <div class="b-camera__controls-item">
+      <button type="button" class="b-camera__back b-btn mod-yellow js-close">Все камеры</button>
+    </div>
+    <div class="b-camera__controls-item">
+      <div class="b-range">
+        <label>Яркость
+          <input type="range" min="5" max="200" class="b-range js-camera-brightness">
+        </label>
+      </div>
+    </div>
+    <div class="b-camera__controls-item">
+      <div class="b-range">
+        <label>Контраст
+          <input type="range" min="5" max="200" class="b-range js-camera-contrast">
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="debag-X"></div>-->
+<!--<div class="debag-Y"></div>-->
+
+<script>
+  function initVideo(video, url) {
+    if (Hls.isSupported()) {
+      var hls = new Hls();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        video.play();
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
+      video.addEventListener('loadedmetadata', function () {
+        video.play();
+      });
+    }
+  }
+
+  initVideo(
+    document.getElementById('video-1'),
+    'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8'
+  );
+
+  initVideo(
+    document.getElementById('video-2'),
+    'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8'
+  );
+
+  initVideo(
+    document.getElementById('video-3'),
+    'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8'
+  );
+
+  initVideo(
+    document.getElementById('video-4'),
+    'http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8'
+  );
+
+</script>
+<script src="scripts/camera.js" defer></script>
+
+
+</section>
+<div class="b-footer">
+  <div class="b-footer__inner wrapper-1280">
+ <span class="b-footer__menu">
+  <a href="#">Помощь</a>
+  <a href="#">Обратная связь </a>
+  <a href="#">Разработчикам</a>
+  <a href="#">Условия использования</a>
+  <a href="https://docviewer.yandex.ru/?url=ya-wiki%3A//wiki-api.yandex.ru/shri-2018-ii/homework/adaptivnaja-vjorstka/license.pdf">Авторские права</a>
+ </span>
+    <div class="copyright">
+      <span>© 2001–2017  ООО «Яндекс»</span>
+    </div>
+  </div>
+</div><script src="scripts/vendor/polyfill.js"></script>
+<script src="scripts/vendor/jquery.min.js"></script>
+<script src="scripts/pointerevents.js" defer></script>
+<script src="scripts/main.js" defer></script>
+
+
+</body>
+</html>
